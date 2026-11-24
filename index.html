@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>건양사이버대학교 사이버대학 디지털 교육환경 고도화 지원 사업 콘텐츠 아카이브</title>
+<title>건양사이버대학교 콘텐츠 아카이브 | 사이버대학 디지털 교육환경 고도화 지원 사업</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -45,10 +45,12 @@ a{color:inherit}
 .hero .wrap{position:relative;padding-top:clamp(48px,9vw,104px);padding-bottom:clamp(40px,7vw,80px)}
 .org{display:flex;align-items:center;gap:10px;font-weight:500;color:var(--muted);font-size:15px;margin:0 0 20px}
 .org i{display:inline-block;width:10px;height:10px;background:var(--accent);border-radius:2px}
-h1{margin:0;font-weight:700;letter-spacing:-.035em;line-height:1.12;font-size:clamp(30px,5.4vw,60px);max-width:15em}
+h1{margin:0;font-weight:700;letter-spacing:-.035em;line-height:1.12;font-size:clamp(30px,5.4vw,60px);max-width:17em}
 h1 span{display:block;color:var(--muted);font-weight:500}
 .lede{margin:24px 0 0;color:var(--muted);max-width:36em}
 
+.notice{margin:16px 0 0;display:flex;align-items:flex-start;gap:10px;max-width:40em;padding:12px 16px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;background:var(--surface);font-size:14.5px;line-height:1.55;color:var(--ink)}
+.notice svg{flex:none;width:18px;height:18px;margin-top:2px;fill:none;stroke:var(--accent);stroke-width:1.6;stroke-linecap:round}
 /* filter */
 .bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);top:env(safe-area-inset-top,0px)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
@@ -86,7 +88,7 @@ main{padding-bottom:80px}
 .stage{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
 .screen{background:#000;border-radius:14px;overflow:hidden;aspect-ratio:16/9;position:relative;border:1px solid var(--line)}
 .screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-@media (max-width:700px){.screen{aspect-ratio:auto;height:0;padding-top:calc(56.25% + 56px)}}
+@media (max-width:700px){.screen{aspect-ratio:auto;height:0;padding-top:56.25%}.screen iframe{top:-56px;bottom:auto;height:calc(100% + 56px)}}
 .now{margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
 .now h3{margin:0;font-size:20px;letter-spacing:-.015em}
 .now p{margin:2px 0 0;color:var(--muted);font-size:14px}
@@ -144,9 +146,9 @@ tfoot td{font-weight:600;background:var(--surface-2);border-bottom:0}
 <body>
 <header class="hero">
   <div class="wrap">
-    <p class="org"><i></i>건양사이버대학교 사이버대학</p>
-    <h1>디지털 교육환경 고도화 지원 사업<span>콘텐츠 아카이브</span></h1>
+    <h1>사이버대학 디지털 교육환경 고도화 지원 사업<span>건양사이버대학교 콘텐츠 아카이브</span></h1>
     <p class="lede" id="lede"></p>
+    <p class="notice"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="3" width="16" height="11" rx="1.5"/><path d="M7 17h6M10 14v3"/></svg>원활한 시청을 위해 PC 환경을 권장합니다. 모바일에서는 영상 플레이어 화면이 다르게 보일 수 있습니다.</p>
     <nav class="tabs" aria-label="보기 선택"><a href="#" id="tWatch">교과목별 시청</a><a href="#status" id="tStatus">콘텐츠 현황</a></nav>
   </div>
 </header>
