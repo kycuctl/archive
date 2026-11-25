@@ -61,6 +61,8 @@ h1 .ax{background:linear-gradient(95deg,#2BDDBE,#6A8EFF 50%,#B783FF);-webkit-bac
 .intro h1 .l2{white-space:nowrap}
 .hdesc{max-width:46em;margin:16px auto 0;font-size:clamp(13px,1.3vw,15px);line-height:1.75;color:#9EA5BC}
 @media (max-width:700px){.intro h1 .l2{font-size:.8em}.intro h1{font-size:clamp(26px,8.4vw,44px)}.hdesc{font-size:13px}}
+.hcred{max-width:46em;margin:14px auto 0;padding-top:12px;border-top:1px solid rgba(160,170,200,.18);font-size:12.5px;line-height:1.7;color:#7E869E}
+@media (max-width:700px){.hcred{font-size:12px}}
 .yrs{display:inline-flex;align-items:center;gap:14px;margin:16px 0 0;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;letter-spacing:.18em;color:#9EA5BC}
 .yrs::before,.yrs::after{content:"";width:28px;height:1px;background:#3A4055}
 .car{position:relative;margin-top:clamp(22px,3vw,34px);--sw:min(56vw,820px);--gap:clamp(10px,1.6vw,22px)}
@@ -334,6 +336,7 @@ function home(){
       <h1>건양사이버대학교 <br class="mbr"><span class="l2"><span class="hy">HYBRID</span> <span class="ax">AI·XR</span> 콘텐츠 아카이브</span></h1>
       <p class="yrs">2025–2026년</p>
       <p class="hdesc">건양사이버대학교 하이브리드 AI·XR 콘텐츠는 건양사이버대학교의 시그니처 콘텐츠로, XR 스튜디오에서 제작한 버추얼 프로덕션 강의 영상에 가상 실습, 360VR, AI 롤플레이를 결합했습니다. 원격 환경에서도 현장처럼 보고, 직접 해보고, 대화하며 배우는 학습 경험을 제공합니다.</p>
+      <p class="hcred">이 아카이브의 콘텐츠는 교육부와 한국교육학술정보원(KERIS)이 추진하는 「2025–2026년 사이버대학 디지털 교육환경 고도화 지원사업」의 지원을 받아 개발되었습니다.</p>
     </div>
     <div class="car" id="car">
       <div class="track" id="track">${[...LIVE,...LIVE,...LIVE].map((d,k)=>{const i=k%LIVE.length;return `<div class="slide" data-s="${i}" style="--fc:${CATS[d.cat].hex}" role="group" aria-roledescription="슬라이드" aria-label="${i+1} / ${LIVE.length}: ${esc(d.name)}">
