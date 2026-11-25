@@ -446,7 +446,7 @@ function status(){
   const yr=c=>`<span class="yr y${c.year}">${c.year}년</span>`;
   const n=v=>v?v+"":"-";
   const sumRows=courses.map((c,i)=>c.dev?`<tr class="devrow"><td class="num">${i+1}</td><td>${tag(c)}</td><td class="wrapc">${esc(c.name)}</td><td>${c.kind||"-"}</td><td>${yr(c)}</td><td colspan="6" class="devcell"><span class="devtag">개발 중</span></td></tr>`:`<tr><td class="num">${i+1}</td><td>${tag(c)}</td><td class="wrapc">${esc(c.name)}</td><td>${c.kind||"-"}</td><td>${yr(c)}</td>
-    <td class="num">${c.lectures.length}편</td><td class="num">${n(cnt(c,"vr"))}</td><td class="num">${n(cnt(c,"sim"))}</td><td class="num">${n(cnt(c,"rp"))}</td><td class="num">${n(cnt(c,"etc"))}</td></tr>`).join("");
+    <td class="num">${c.lectures.length}편</td><td class="num">${n(cnt(c,"sim"))}</td><td class="num">${n(cnt(c,"vr"))}</td><td class="num">${n(cnt(c,"rp"))}</td><td class="num">${n(cnt(c,"etc"))}</td></tr>`).join("");
   const T=(k,v)=>courses.reduce((s,c)=>s+(k==="v"?c.lectures.length:cnt(c,k)),0);
   const vidRows=vids.map((r,i)=>{const {c,l}=r;const name=l.grp?l.title:(l.title?`${l.label}. ${l.title}`:`${c.name} ${l.label}`);return `<tr>
     <td class="num">${i+1}</td><td>${tag(c)}</td><td class="wrapc">${esc(c.name)}</td><td>${esc(l.grp?l.grp+" 과정":l.label)}</td><td class="wrapc">${esc(name)}</td>
@@ -456,7 +456,7 @@ function status(){
     <tbody>${list.map((r,i)=>`<tr><td class="num">${i+1}</td><td>${tag(r.c)}</td><td class="wrapc">${esc(r.c.name)}</td><td class="wrapc">${esc(r.l.grp?`${r.l.grp} · ${r.l.title}`:r.l.label)}</td>${withType?`<td>${esc(r.x.type)}</td>`:""}<td class="wrapc">${esc(r.x.title)}</td><td>${yr(r.c)}</td><td><a class="btn" href="${esc(r.x.url)}" target="_blank" rel="noopener">열기</a></td></tr>`).join("")}</tbody></table></div>`
     :`<p class="empty">해당 조건의 콘텐츠가 없습니다.</p>`;
   // year-over-year by type (field filter only)
-  const TYPES=[["v","동영상(VP)","편"],["vr","360VR","건"],["sim","가상 실습","건"],["rp","AI 롤플레이","건"],["etc","기타","건"]];
+  const TYPES=[["v","동영상(VP)","편"],["sim","가상 실습","건"],["vr","360VR","건"],["rp","AI 롤플레이","건"],["etc","기타","건"]];
   const YRS=[2025,2026];
   const yCount=(y,k)=>DATA.filter(c=>!c.dev&&c.year===y&&(sFilter==="all"||c.cat===sFilter)).reduce((s,c)=>s+(k==="v"?c.lectures.length:cnt(c,k)),0);
   const tot=y=>TYPES.reduce((s,[k])=>s+yCount(y,k),0);
@@ -464,7 +464,7 @@ function status(){
   const plan=(y,k)=>k!=="v"?0:DATA.filter(c=>c.dev&&c.year===y&&(sFilter==="all"||c.cat===sFilter)).reduce((s,c)=>s+(c.planned||0),0);
   const P=YRS.map(y=>TYPES.map(([k])=>plan(y,k)));
   const T0=tot(2025),T1=tot(2026),P1=P[1].reduce((a,b)=>a+b,0),P0=P[0].reduce((a,b)=>a+b,0);
-  const cols=TYPES.map(([k,nm,u],i)=>[nm,u,A[0][i]+P[0][i],A[1][i],P[1][i],false]).sort((p,q)=>(q[3]+q[4])-(p[3]+p[4])||q[2]-p[2]);
+  const cols=TYPES.map(([k,nm,u],i)=>[nm,u,A[0][i]+P[0][i],A[1][i],P[1][i],false]);
   cols.push(["전체 콘텐츠","건",T0+P0,T1,P1,true]);
   const MX=Math.max(...cols.map(r=>Math.max(r[2],r[3]+r[4])),1);
   const chart=`<section class="yoy" aria-label="연도별 콘텐츠 유형별 수량"><div class="yoy-head"><h2>연도별 콘텐츠 현황</h2><span class="lg"><i class="b2025"></i>2025년<i class="b2026"></i>2026년${P1?`<i class="bplan"></i>2026년 개발 중`:""}</span></div>
@@ -477,8 +477,8 @@ function status(){
     <p class="ynote">막대 아래 숫자는 2025년 대비 증감입니다. 2026년 막대의 빗금 부분은 현재 개발 중인 교과목(스마트돌봄 사례관리, AI·XR 교육콘텐츠 운용, 브랜드 인문학)의 콘텐츠 수량입니다.(2026년 11월 기준)</p></section>`;
   const GUIDE=[
     ["VP","동영상(VP)","버추얼 프로덕션(Virtual Production) 방식으로 제작한 강의 영상입니다. XR 스튜디오에서 VR 가상 배경에 AR 요소를 실시간으로 결합해 촬영하여, 강의 주제에 맞는 공간 속에서 몰입감 있게 학습할 수 있습니다.",`${T("v")}편`],
-    ["360","360VR","360도 카메라 촬영과 3D 가우시안 스플래팅(3D Gaussian Splatting) 기술로 실제 현장을 구현한 웹 기반 체험 콘텐츠입니다. 별도 장비 없이 브라우저에서 시점을 자유롭게 돌리며 현장을 둘러볼 수 있습니다.",`${exs.vr.length}건`],
     ["SIM","가상 실습","WebXR·WebGL 기반의 웹 인터랙티브 콘텐츠입니다. 실제로 반복하기 어려운 상황을 화면 속에서 직접 조작하며 절차와 대처 방법을 익힙니다.",`${exs.sim.length}건`],
+    ["360","360VR","360도 카메라 촬영과 3D 가우시안 스플래팅(3D Gaussian Splatting) 기술로 실제 현장을 구현한 웹 기반 체험 콘텐츠입니다. 별도 장비 없이 브라우저에서 시점을 자유롭게 돌리며 현장을 둘러볼 수 있습니다.",`${exs.vr.length}건`],
     ["AI","AI 롤플레이","생성형 AI가 상황 속 인물을 맡아 학습자와 실시간으로 대화하는 대화형 콘텐츠입니다. 실제와 같은 상황에서 말을 주고받으며 의사소통과 문제 해결 능력을 기르고, 대화가 끝나면 피드백을 받습니다.",`${exs.rp.length}건`],
     ["ETC","기타","H5P 기반 토론형 콘텐츠와 강의 주제를 넓혀주는 연계 영상입니다.",`${exs.etc.length}건`]];
   const guide=`<section class="guide" aria-label="콘텐츠 유형 안내"><h2>콘텐츠 유형 안내</h2><div class="gd">${GUIDE.map(([ab,nm,ds,ct])=>`<article><div class="gt"><span class="ab">${ab}</span><b>${nm}</b><em>${ct}</em></div><p>${ds}</p></article>`).join("")}</div></section>`;
@@ -489,21 +489,21 @@ function status(){
     <div class="stats">
       <div><b>${courses.length}개</b><span>교과목${courses.some(c=>c.dev)?` (개발 중 ${courses.filter(c=>c.dev).length}개 포함)`:""}</span></div>
       <div><a href="#s-video">${T("v")}편</a><span>동영상(VP)</span></div>
-      <div><a href="#s-vr">${exs.vr.length}건</a><span>360VR 콘텐츠</span></div>
       <div><a href="#s-sim">${exs.sim.length}건</a><span>가상 실습 콘텐츠</span></div>
+      <div><a href="#s-vr">${exs.vr.length}건</a><span>360VR 콘텐츠</span></div>
       <div><a href="#s-rp">${exs.rp.length}건</a><span>AI 롤플레이 콘텐츠</span></div>
       <div><a href="#s-etc">${exs.etc.length}건</a><span>기타 추가 콘텐츠</span></div>
     </div>
     <section class="sum"><h2>교과목별 현황</h2><div class="tbl-wrap"><table>
-      <thead><tr><th class="num">No</th><th>분야</th><th>교과목명</th><th>교육과정</th><th>제작년도</th><th class="num">동영상(VP)</th><th class="num">360VR</th><th class="num">가상 실습</th><th class="num">AI 롤플레이</th><th class="num">기타</th></tr></thead>
+      <thead><tr><th class="num">No</th><th>분야</th><th>교과목명</th><th>교육과정</th><th>제작년도</th><th class="num">동영상(VP)</th><th class="num">가상 실습</th><th class="num">360VR</th><th class="num">AI 롤플레이</th><th class="num">기타</th></tr></thead>
       <tbody>${sumRows}</tbody>
-      <tfoot><tr><td></td><td>합계</td><td>${courses.length}개 교과목</td><td></td><td></td><td class="num">${T("v")}편</td><td class="num">${exs.vr.length}</td><td class="num">${exs.sim.length}</td><td class="num">${exs.rp.length}</td><td class="num">${exs.etc.length}</td></tr></tfoot>
+      <tfoot><tr><td></td><td>합계</td><td>${courses.length}개 교과목</td><td></td><td></td><td class="num">${T("v")}편</td><td class="num">${exs.sim.length}</td><td class="num">${exs.vr.length}</td><td class="num">${exs.rp.length}</td><td class="num">${exs.etc.length}</td></tr></tfoot>
     </table></div></section>
     <section class="det" id="s-video"><h2>동영상(VP) <small>${vids.length}편</small></h2><div class="tbl-wrap"><table>
       <thead><tr><th class="num">No</th><th>분야</th><th>교과목명</th><th>강 · 수준</th><th>콘텐츠명</th><th>분류 · 강사</th><th>제작년도</th></tr></thead>
       <tbody>${vidRows}</tbody></table></div></section>
-    <section class="det" id="s-vr"><h2>360VR 콘텐츠 <small>${exs.vr.length}건</small></h2>${exTable(exs.vr,false)}</section>
     <section class="det" id="s-sim"><h2>가상 실습 콘텐츠 <small>${exs.sim.length}건</small></h2>${exTable(exs.sim,false)}</section>
+    <section class="det" id="s-vr"><h2>360VR 콘텐츠 <small>${exs.vr.length}건</small></h2>${exTable(exs.vr,false)}</section>
     <section class="det" id="s-rp"><h2>AI 롤플레이 콘텐츠 <small>${exs.rp.length}건</small></h2>${exTable(exs.rp,false)}</section>
     <section class="det" id="s-etc"><h2>기타 추가 콘텐츠 <small>${exs.etc.length}건 · H5P 토론, 추가 영상</small></h2>${exTable(exs.etc,true)}</section>
   </div></main>`;
