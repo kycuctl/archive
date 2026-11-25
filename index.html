@@ -101,6 +101,10 @@ main{padding-bottom:72px}
 .row{margin-top:22px}
 .row-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px}
 .row-head h3{margin:0;font-size:clamp(17px,1.8vw,20px);font-weight:700;letter-spacing:-.015em}
+.tc{display:inline-flex;flex-wrap:wrap;gap:6px;margin-left:10px;vertical-align:2px}
+.tc span{font-size:12.5px;font-weight:500;color:var(--muted);padding:2px 9px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}
+.tc b{color:var(--c);font-weight:700}
+.row-head h3 small .tk{color:var(--ink);font-weight:700}
 .row-head h3 small{margin-left:8px;font-size:13.5px;font-weight:500;color:var(--muted)}
 .row-head button{all:unset;cursor:pointer;font-size:14px;font-weight:600;color:var(--muted);white-space:nowrap}
 .row-head button:hover{color:var(--ink)}
@@ -307,7 +311,7 @@ function home(){
   const fields = Object.entries(CATS).map(([k,c])=>{
     const list = DATA.filter(d=>d.cat===k);
     const rows = list.map(d=>d.dev?`<section class="row"><div class="row-head"><h3>${esc(d.name)}<small>${d.year}년 개발 중</small></h3></div><div class="devcard"><span class="devtag">개발 중</span>2026년 개발 중인 교과목입니다. 콘텐츠가 완성되면 이곳에서 공개됩니다.</div></section>`:`<section class="row">
-      <div class="row-head"><h3>${esc(d.name)}<small>${d.year}년 개발 · ${d.lectures.length}편</small></h3><button data-go="${d.slug}">전체 보기</button></div>
+      <div class="row-head"><h3>${esc(d.name)}<small>${d.year}년 개발 · 총 <b class="tk">${d.lectures.length}강</b> 구성</small>${tcount(d)}</h3><button data-go="${d.slug}">전체 보기</button></div>
       <div class="rail-wrap">
         <button class="arrow l" aria-label="이전 강의 보기"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
         <div class="rail">${d.lectures.map((l,i)=>`<button class="ep" data-go="${d.slug}" data-i="${i}">
@@ -432,6 +436,9 @@ function player(course, idx){
 }
 
 let sFilter="all", sYear="all";
+const tcount = d => { const n=k=>d.lectures.reduce((s,l)=>s+(l.extras||[]).filter(x=>KIND(x)===k).length,0);
+  const items=[["동영상(VP)",d.lectures.length,"편"],["가상 실습",n("sim"),"건"],["360VR",n("vr"),"건"],["AI 롤플레이",n("rp"),"건"],["기타",n("etc"),"건"]].filter(i=>i[1]>0);
+  return `<span class="tc">${items.map(([a,b,u])=>`<span>${a} <b>${b}</b>${u}</span>`).join("")}</span>`; };
 const KIND = x => x.type==="360VR" ? "vr" : x.type==="가상 실습" ? "sim" : x.type==="AI 롤플레이" ? "rp" : "etc";
 function status(){
   clearInterval(timer); window.onresize=null;
