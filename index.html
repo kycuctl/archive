@@ -225,9 +225,21 @@ em.up{color:var(--care)}em.down,em.flat{color:var(--muted)}
 .gt b{font-size:16px}
 .gt em{margin-left:auto;font-style:normal;font-size:13px;color:var(--muted)}
 .gd p{margin:10px 0 0;font-size:14px;line-height:1.65;color:var(--muted)}
+.tot-sec{margin-top:28px;max-width:1200px}
+.tot-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px}
+.tot-head h2{margin:0;font-size:20px}
+.tot-head span{font-size:13px;color:var(--muted)}
+.tot-sec .stats{margin-top:0}
+.grand{text-align:center;padding:clamp(26px,4vw,44px) 16px clamp(22px,3vw,34px);margin-bottom:12px;border:1px solid var(--line);border-radius:16px;background:radial-gradient(ellipse at 50% 120%,color-mix(in srgb,var(--digital) 16%,transparent),transparent 65%),var(--card)}
+.gl{margin:0;font-size:13px;font-weight:700;letter-spacing:.16em;color:var(--muted)}
+.gn{margin:6px 0 0;line-height:1;font-family:var(--display);font-size:clamp(72px,12vw,140px);letter-spacing:-.02em}
+.gn small{font-size:.28em;margin-left:.12em;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:0}
+.gs{margin:12px 0 0;font-size:13.5px;color:var(--muted)}
 .devcard{display:flex;align-items:center;gap:12px;padding:20px 22px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-size:14.5px;background:repeating-linear-gradient(135deg,transparent 0 14px,var(--hover) 14px 15px)}
 .devtag{flex:none;display:inline-block;padding:2px 10px;border-radius:999px;border:1px solid var(--c,var(--accent));color:var(--c,var(--accent));font-size:12.5px;font-weight:700}
 .devrow td{color:var(--muted)}
+.devrow .devtag{margin-left:6px;padding:1px 8px;font-size:11.5px}
+.fsm{display:block;font-size:11.5px;font-weight:500;color:var(--muted)}
 .eps li.gh{display:flex;justify-content:space-between;padding:12px 10px 6px;font-size:13px;font-weight:700;color:var(--c);border-top:1px solid var(--line);margin-top:4px}
 .eps li.gh:first-child{border-top:0;margin-top:0;padding-top:6px}
 .eps li.gh span{color:var(--muted);font-weight:500}
@@ -466,8 +478,9 @@ function status(){
   const tag=c=>`<span class="tg" style="--c:var(${CATS[c.cat].v})"><i></i>${CATS[c.cat].name}</span>`;
   const yr=c=>`<span class="yr y${c.year}">${c.year}년</span>`;
   const n=v=>v?v+"":"-";
-  const sumRows=courses.map((c,i)=>c.dev?`<tr class="devrow"><td class="num">${i+1}</td><td>${tag(c)}</td><td class="wrapc">${esc(c.name)}</td><td>${c.kind||"-"}</td><td>${yr(c)}</td><td colspan="6" class="devcell"><span class="devtag">개발 중</span></td></tr>`:`<tr><td class="num">${i+1}</td><td>${tag(c)}</td><td class="wrapc">${esc(c.name)}</td><td>${c.kind||"-"}</td><td>${yr(c)}</td>
+  const sumRows=courses.map((c,i)=>c.dev?`<tr class="devrow"><td class="num">${i+1}</td><td>${tag(c)}</td><td class="wrapc">${esc(c.name)}</td><td>${c.kind||"-"}</td><td>${yr(c)}</td><td class="num">${c.planned||0}편 <span class="devtag">개발 중</span></td><td colspan="5"></td></tr>`:`<tr><td class="num">${i+1}</td><td>${tag(c)}</td><td class="wrapc">${esc(c.name)}</td><td>${c.kind||"-"}</td><td>${yr(c)}</td>
     <td class="num">${c.lectures.length}편</td><td class="num">${n(cnt(c,"sim"))}</td><td class="num">${n(cnt(c,"vr"))}</td><td class="num">${n(cnt(c,"rp"))}</td><td class="num">${n(cnt(c,"etc"))}</td></tr>`).join("");
+  const planV=courses.filter(c=>c.dev).reduce((s,c)=>s+(c.planned||0),0);
   const T=(k,v)=>courses.reduce((s,c)=>s+(k==="v"?c.lectures.length:cnt(c,k)),0);
   const vidRows=vids.map((r,i)=>{const {c,l}=r;const name=l.grp?l.title:(l.title?`${l.label}. ${l.title}`:`${c.name} ${l.label}`);return `<tr>
     <td class="num">${i+1}</td><td>${tag(c)}</td><td class="wrapc">${esc(c.name)}</td><td>${esc(l.grp?l.grp+" 과정":l.label)}</td><td class="wrapc">${esc(name)}</td>
@@ -505,20 +518,22 @@ function status(){
   const guide=`<section class="guide" aria-label="콘텐츠 유형 안내"><h2>콘텐츠 유형 안내</h2><div class="gd">${GUIDE.map(([ab,nm,ds,ct])=>`<article><div class="gt"><span class="ab">${ab}</span><b>${nm}</b><em>${ct}</em></div><p>${ds}</p></article>`).join("")}</div></section>`;
   app.innerHTML=`<div class="wrap shead"><p class="prog" style="color:var(--muted)">사이버대학 디지털 교육환경 고도화 지원 사업</p><h1>콘텐츠 현황</h1></div>
   <nav class="bar" aria-label="현황 필터" style="margin-top:18px"><div class="wrap">${chips}</div></nav><main><div class="wrap">
-    ${chart}
-    ${guide}
+    <section class="tot-sec" aria-label="한눈에 보는 아카이브"><div class="tot-head"><h2>한눈에 보는 아카이브</h2><span>${planV?"개발 중 교과목 포함 · ":""}2026년 11월 기준</span></div>
+    <div class="grand"><p class="gl">HYBRID AI·XR 전체 콘텐츠</p><p class="gn"><span class="hy" data-count="${T("v")+planV+exs.sim.length+exs.vr.length+exs.rp.length+exs.etc.length}">${T("v")+planV+exs.sim.length+exs.vr.length+exs.rp.length+exs.etc.length}</span><small>개</small></p><p class="gs">동영상(VP) · 가상 실습 · 360VR · AI 롤플레이 · 기타 콘텐츠 합계${planV?` (개발 중 ${planV}편 포함)`:""}</p></div>
     <div class="stats">
       <div><b>${courses.length}개</b><span>교과목${courses.some(c=>c.dev)?` (개발 중 ${courses.filter(c=>c.dev).length}개 포함)`:""}</span></div>
-      <div><a href="#s-video">${T("v")}편</a><span>동영상(VP)</span></div>
+      <div><a href="#s-video">${T("v")+planV}편</a><span>동영상(VP)${planV?` (개발 중 ${planV}편 포함)`:""}</span></div>
       <div><a href="#s-sim">${exs.sim.length}건</a><span>가상 실습 콘텐츠</span></div>
       <div><a href="#s-vr">${exs.vr.length}건</a><span>360VR 콘텐츠</span></div>
       <div><a href="#s-rp">${exs.rp.length}건</a><span>AI 롤플레이 콘텐츠</span></div>
       <div><a href="#s-etc">${exs.etc.length}건</a><span>기타 추가 콘텐츠</span></div>
-    </div>
+    </div></section>
+    ${chart}
+    ${guide}
     <section class="sum"><h2>교과목별 현황</h2><div class="tbl-wrap"><table>
       <thead><tr><th class="num">No</th><th>분야</th><th>교과목명</th><th>교육과정</th><th>제작년도</th><th class="num">동영상(VP)</th><th class="num">가상 실습</th><th class="num">360VR</th><th class="num">AI 롤플레이</th><th class="num">기타</th></tr></thead>
       <tbody>${sumRows}</tbody>
-      <tfoot><tr><td></td><td>합계</td><td>${courses.length}개 교과목</td><td></td><td></td><td class="num">${T("v")}편</td><td class="num">${exs.sim.length}</td><td class="num">${exs.vr.length}</td><td class="num">${exs.rp.length}</td><td class="num">${exs.etc.length}</td></tr></tfoot>
+      <tfoot><tr><td></td><td>합계</td><td>${courses.length}개 교과목</td><td></td><td></td><td class="num">${T("v")+planV}편${planV?`<small class="fsm">개발 중 ${planV}편 포함</small>`:""}</td><td class="num">${exs.sim.length}</td><td class="num">${exs.vr.length}</td><td class="num">${exs.rp.length}</td><td class="num">${exs.etc.length}</td></tr></tfoot>
     </table></div></section>
     <section class="det" id="s-video"><h2>동영상(VP) <small>${vids.length}편</small></h2><div class="tbl-wrap"><table>
       <thead><tr><th class="num">No</th><th>분야</th><th>교과목명</th><th>강 · 수준</th><th>콘텐츠명</th><th>분류 · 강사</th><th>제작년도</th></tr></thead>
@@ -530,6 +545,7 @@ function status(){
   </div></main>`;
   app.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{sFilter=b.dataset.f;status();});
   app.querySelectorAll("[data-y]").forEach(b=>b.onclick=()=>{sYear=b.dataset.y;status();});
+  const gnum=app.querySelector('[data-count]'); if(gnum&&!reduce){const N=+gnum.dataset.count,t0=performance.now();const step=now=>{const p=Math.min(1,(now-t0)/1400),e=1-Math.pow(1-p,3);gnum.textContent=Math.round(N*e);if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step);}
   app.querySelectorAll('.stats a').forEach(a=>a.onclick=e=>{e.preventDefault();document.querySelector(a.getAttribute("href")).scrollIntoView({behavior:reduce?"auto":"smooth"});});
 }
 function setTabs(isStatus){
