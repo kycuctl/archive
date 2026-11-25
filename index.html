@@ -231,8 +231,8 @@ em.up{color:var(--care)}em.down,em.flat{color:var(--muted)}
 .tot-head span{font-size:13px;color:var(--muted)}
 .tot-sec .stats{margin-top:0}
 .grand{text-align:center;padding:clamp(26px,4vw,44px) 16px clamp(22px,3vw,34px);margin-bottom:12px;border:1px solid var(--line);border-radius:16px;background:radial-gradient(ellipse at 50% 120%,color-mix(in srgb,var(--digital) 16%,transparent),transparent 65%),var(--card)}
-.gl{margin:0;font-size:13px;font-weight:700;letter-spacing:.16em;color:var(--muted)}
-.gn{margin:6px 0 0;line-height:1;font-family:var(--display);font-size:clamp(72px,12vw,140px);letter-spacing:-.02em}
+.gl{margin:0;font-size:13px;font-weight:700;letter-spacing:.16em;padding-left:.16em;color:var(--muted)}
+.gn{margin:8px 0 0;line-height:1;font-family:var(--display);font-size:clamp(72px,12vw,140px);letter-spacing:0;font-variant-numeric:tabular-nums}
 .gn small{font-size:.28em;margin-left:.12em;color:var(--muted);font-family:var(--body);font-weight:700;letter-spacing:0}
 .gs{margin:12px 0 0;font-size:13.5px;color:var(--muted)}
 .devcard{display:flex;align-items:center;gap:12px;padding:20px 22px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-size:14.5px;background:repeating-linear-gradient(135deg,transparent 0 14px,var(--hover) 14px 15px)}
@@ -519,14 +519,14 @@ function status(){
   app.innerHTML=`<div class="wrap shead"><p class="prog" style="color:var(--muted)">사이버대학 디지털 교육환경 고도화 지원 사업</p><h1>콘텐츠 현황</h1></div>
   <nav class="bar" aria-label="현황 필터" style="margin-top:18px"><div class="wrap">${chips}</div></nav><main><div class="wrap">
     <section class="tot-sec" aria-label="한눈에 보는 아카이브"><div class="tot-head"><h2>한눈에 보는 아카이브</h2><span>${planV?"개발 중 교과목 포함 · ":""}2026년 11월 기준</span></div>
-    <div class="grand"><p class="gl">HYBRID AI·XR 전체 콘텐츠</p><p class="gn"><span class="hy" data-count="${T("v")+planV+exs.sim.length+exs.vr.length+exs.rp.length+exs.etc.length}">${T("v")+planV+exs.sim.length+exs.vr.length+exs.rp.length+exs.etc.length}</span><small>개</small></p><p class="gs">동영상(VP) · 가상 실습 · 360VR · AI 롤플레이 · 기타 콘텐츠 합계${planV?` (개발 중 ${planV}편 포함)`:""}</p></div>
+    <div class="grand"><p class="gl">HYBRID AI·XR 전체 콘텐츠</p><p class="gn"><span class="hy" data-count="${T("v")+planV+exs.sim.length+exs.vr.length+exs.rp.length+exs.etc.length}">${T("v")+planV+exs.sim.length+exs.vr.length+exs.rp.length+exs.etc.length}</span></p><p class="gs">동영상(VP) · 가상 실습 · 360VR · AI 롤플레이 · 기타 콘텐츠 합계${planV?` (개발 중 ${planV}개 포함)`:""}</p></div>
     <div class="stats">
-      <div><b>${courses.length}개</b><span>교과목${courses.some(c=>c.dev)?` (개발 중 ${courses.filter(c=>c.dev).length}개 포함)`:""}</span></div>
-      <div><a href="#s-video">${T("v")+planV}편</a><span>동영상(VP)${planV?` (개발 중 ${planV}편 포함)`:""}</span></div>
-      <div><a href="#s-sim">${exs.sim.length}건</a><span>가상 실습 콘텐츠</span></div>
-      <div><a href="#s-vr">${exs.vr.length}건</a><span>360VR 콘텐츠</span></div>
-      <div><a href="#s-rp">${exs.rp.length}건</a><span>AI 롤플레이 콘텐츠</span></div>
-      <div><a href="#s-etc">${exs.etc.length}건</a><span>기타 추가 콘텐츠</span></div>
+      <div><b>${courses.length}종</b><span>교과목${courses.some(c=>c.dev)?` (개발 중 ${courses.filter(c=>c.dev).length}종 포함)`:""}</span></div>
+      <div><a href="#s-video">${T("v")+planV}개</a><span>동영상(VP)${planV?` (개발 중 ${planV}개 포함)`:""}</span></div>
+      <div><a href="#s-sim">${exs.sim.length}개</a><span>가상 실습 콘텐츠</span></div>
+      <div><a href="#s-vr">${exs.vr.length}개</a><span>360VR 콘텐츠</span></div>
+      <div><a href="#s-rp">${exs.rp.length}개</a><span>AI 롤플레이 콘텐츠</span></div>
+      <div><a href="#s-etc">${exs.etc.length}개</a><span>기타 추가 콘텐츠</span></div>
     </div></section>
     ${chart}
     ${guide}
