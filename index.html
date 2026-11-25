@@ -78,6 +78,11 @@ h1 .ax{background:linear-gradient(95deg,#2BDDBE,#6A8EFF 50%,#B783FF);-webkit-bac
 .info .tag{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:13px;color:var(--fc)}
 .info .tag i{width:8px;height:8px;border-radius:2px;background:var(--fc)}
 .info h2{margin:2px 0 0;font-size:clamp(17px,1.7vw,22px);font-weight:700;letter-spacing:-.02em;line-height:1.3}
+.slide .tc{margin:8px 0 0;display:flex}
+.slide .tc span{color:#AEB4C8;border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.04)}
+.slide .tc b{color:var(--fc)}
+.info p b{color:#F1F3F9}
+@media (max-width:700px){.slide .tc{gap:4px;margin-top:6px}.slide .tc span{font-size:11px;padding:1px 7px}}
 .info p{margin:1px 0 0;color:#9EA5BC;font-size:13.5px}
 .cta{display:flex;flex:none;gap:8px}
 .b-play{display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;background:#F1F3F9;color:#07090F;font-weight:700;font-size:clamp(14px,1.4vw,16px);padding:10px 22px 10px 18px;border-radius:8px}
@@ -358,7 +363,7 @@ function home(){
     <div class="car" id="car">
       <div class="track" id="track">${[...LIVE,...LIVE,...LIVE].map((d,k)=>{const i=k%LIVE.length;return `<div class="slide" data-s="${i}" style="--fc:${CATS[d.cat].hex}" role="group" aria-roledescription="슬라이드" aria-label="${i+1} / ${LIVE.length}: ${esc(d.name)}">
         <div class="art">${keyArt(d)}</div>
-        <div class="info"><div><span class="tag"><i></i>${CATS[d.cat].name}</span><h2>${esc(d.name)}</h2><p>${d.year}년 개발 · 강의 ${d.lectures.length}편</p></div>
+        <div class="info"><div><span class="tag"><i></i>${CATS[d.cat].name}</span><h2>${esc(d.name)}</h2><p>${d.year}년 개발 · 총 <b>${d.lectures.length}강</b> 구성</p>${tcount(d)}</div>
           <div class="cta"><button class="b-play" data-go="${d.slug}" data-i="0" tabindex="-1">${playIcon}1강 재생</button><button class="b-more" data-go="${d.slug}" tabindex="-1">강의 목록</button></div></div>
       </div>`}).join("")}</div>
       <button class="nav-btn l" id="cPrev" aria-label="이전 교과목"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
