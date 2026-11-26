@@ -399,7 +399,7 @@ const CATS = {
 const app = document.getElementById("app");
 const total = DATA.reduce((s,c)=>s+c.lectures.length,0);
 const LIVE = DATA.filter(d=>!d.dev);
-const SHORTS = [["udQZbRHlweQ","end-of-life"],["CkHLlSdSWiI","end-of-life"],["Xi9lImGpUig","end-of-life"],["4T3C8IyqWiY","ai-xr-design"],["QJROZ4bM-as","smart-care"],["By451S4VRA0","smart-care"],["SkTMQdtsmTQ","film-humanities"]].map(([yt,slug],i)=>{const c=DATA.find(d=>d.slug===slug);return {yt,slug,c,n:i};});
+const SHORTS = [["udQZbRHlweQ","end-of-life"],["CkHLlSdSWiI","end-of-life"],["Xi9lImGpUig","end-of-life"],["4T3C8IyqWiY","ai-xr-design"],["QJROZ4bM-as","smart-care"],["By451S4VRA0","smart-care"],["SkTMQdtsmTQ","film-humanities"],["huIHI13ZXHk","brand-humanities"]].map(([yt,slug],i)=>{const c=DATA.find(d=>d.slug===slug);return {yt,slug,c,n:i};});
 SHORTS.forEach(s=>{s.fb=`${s.c.name} 숏폼 ${SHORTS.filter(x=>x.c===s.c).indexOf(s)+1}`;s.title="";});
 const stitle=s=>s.title||s.fb;
 const stSpan=s=>`<span data-stitle="${s.n}">${esc(stitle(s))}</span>`;
