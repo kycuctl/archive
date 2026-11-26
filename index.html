@@ -155,6 +155,7 @@ main{padding-bottom:72px}
 .vhead .cat i{width:8px;height:8px;border-radius:2px;background:var(--c)}
 .vhead h2{margin:4px 0 0;font-family:var(--display);font-weight:400;font-size:clamp(28px,4vw,46px);line-height:1.15}
 .stage{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start}
+.stage>*{min-width:0}
 .screen{background:#000;border-radius:10px;overflow:hidden;aspect-ratio:16/9;position:relative}
 .screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .screen.tall{aspect-ratio:auto;height:min(78vh,720px);background:#fff}
@@ -320,6 +321,16 @@ html.sv-open,html.sv-open body{overflow:hidden}
 .lb-x{position:fixed;top:calc(env(safe-area-inset-top,0px) + 14px);right:14px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.5);color:#fff;cursor:pointer;display:grid;place-items:center}
 .lb-x svg{width:20px;height:20px;stroke:currentColor;stroke-width:2.2;fill:none}
 @media (max-width:760px){.promo-grid{grid-template-columns:1fr}.poster{max-width:420px;width:100%;justify-self:center}}
+.fsb{display:none}
+@media (max-width:900px),(hover:none){.fsb{display:inline-flex}}
+.pfs{margin-top:10px}
+.promo-wrap{min-width:0}
+.screen:fullscreen,.promo:fullscreen{border-radius:0;border:0;aspect-ratio:auto;width:100%;height:100%;padding:0}
+.screen:fullscreen iframe,.promo:fullscreen iframe{top:0;height:100%}
+.pfs-on{position:fixed!important;inset:0!important;z-index:70;width:100vw!important;height:100dvh!important;max-width:none!important;aspect-ratio:auto!important;padding:0!important;border-radius:0!important;border:0!important;background:#000}
+.pfs-on iframe{top:0!important;height:100%!important}
+.pfs-x{position:fixed;z-index:71;top:calc(env(safe-area-inset-top,0px) + 12px);right:12px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;cursor:pointer}
+.pfs-x svg{width:20px;height:20px;stroke:currentColor;stroke-width:2.2;fill:none}
 .devcard{display:flex;align-items:center;gap:12px;padding:20px 22px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-size:14.5px;background:repeating-linear-gradient(135deg,transparent 0 14px,var(--hover) 14px 15px)}
 .devtag{flex:none;display:inline-block;padding:2px 10px;border-radius:999px;border:1px solid var(--c,var(--accent));color:var(--c,var(--accent));font-size:12.5px;font-weight:700}
 .devrow td{color:var(--muted)}
@@ -375,7 +386,7 @@ td a.btn{padding:5px 10px;font-size:13px}
 tfoot td{font-weight:600;background:var(--bg2);border-bottom:0}
 footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:13.5px}
 
-@media (max-width:980px){.stage{grid-template-columns:1fr}.eps ol{max-height:none}}
+@media (max-width:980px){.stage{grid-template-columns:minmax(0,1fr)}.eps ol{max-height:none}}
 @media (max-width:560px){}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.intro{animation:none}.hy{animation:none}}
 @media print{.top,.hero,.bar,footer,td:last-child,th:last-child{display:none}.tbl-wrap{overflow:visible;border:0}table{min-width:0;font-size:11px}th{position:static}}
@@ -464,7 +475,7 @@ function home(){
         <span class="sth"><img src="https://i.ytimg.com/vi/${s.yt}/oardefault.jpg" alt="" loading="lazy" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='https://i.ytimg.com/vi/${s.yt}/hqdefault.jpg'}"><span class="spl">${playIcon}</span>
         <span class="scap"><i>${esc(s.c.name)}</i>${stSpan(s)}</span></span></button>`).join("")}</div></div></section>
     <section class="promo-sec" aria-label="홍보"><div class="fh"><h2>홍보</h2><span class="ft">PROMO</span><p class="fd">건양사이버대학교 HYBRID AI·XR 콘텐츠를 소개하는 영상과 포스터</p></div>
-      <div class="promo-grid"><div class="promo" id="promo"><button class="promo-btn" aria-label="홍보 영상 재생"><img src="https://i.ytimg.com/vi/QjqLS0CcTGo/maxresdefault.jpg" alt="" loading="lazy" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='https://i.ytimg.com/vi/QjqLS0CcTGo/hqdefault.jpg'}"><span class="promo-pl">${playIcon}</span></button></div>
+      <div class="promo-grid"><div class="promo-wrap"><div class="promo" id="promo"><button class="promo-btn" aria-label="홍보 영상 재생"><img src="https://i.ytimg.com/vi/QjqLS0CcTGo/maxresdefault.jpg" alt="" loading="lazy" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='https://i.ytimg.com/vi/QjqLS0CcTGo/hqdefault.jpg'}"><span class="promo-pl">${playIcon}</span></button></div><button class="btn fsb pfs" id="pfs"><svg viewBox="0 0 16 16"><path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"/></svg>전체 화면</button></div>
       <button class="poster" id="posterBtn" aria-label="포스터 크게 보기"><img src="poster.jpg" alt="교육부 인공지능·디지털(AID) 30+ 프로젝트 사이버대학 디지털교육 환경 고도화 지원사업 홍보 포스터 – 사이버교육 그 이상" loading="lazy"><span class="pz"><svg viewBox="0 0 24 24"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-5-5M11 8v6M8 11h6"/></svg>크게 보기</span></button></div></div>
     </section>
   </div></main>`;
@@ -500,6 +511,7 @@ function home(){
     const close=()=>{o.remove();document.documentElement.classList.remove("sv-open");pz.focus();};
     o.onclick=e=>{if(e.target===o||e.target.closest(".lb-x"))close();}; o.onkeydown=e=>{if(e.key==="Escape")close();};
     document.body.appendChild(o);document.documentElement.classList.add("sv-open");o.focus();};
+  const pfs=app.querySelector("#pfs"); if(pfs) pfs.onclick=()=>{ if(app.querySelector(".promo-btn")) app.querySelector(".promo-btn").click(); goFull(document.getElementById("promo")); };
   const pb=app.querySelector(".promo-btn"); if(pb) pb.onclick=()=>{document.getElementById("promo").innerHTML=`<iframe src="https://www.youtube.com/embed/QjqLS0CcTGo?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="홍보 영상" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;};
   app.querySelectorAll("[data-short]").forEach(b=>b.onclick=()=>{location.hash="shorts-"+b.dataset.short;});
   app.querySelectorAll(".rail-wrap").forEach(w=>{
@@ -512,6 +524,18 @@ function home(){
 function bindGo(b){ b.onclick=()=>{ pendingIdx = b.dataset.i ? +b.dataset.i : 0; location.hash=b.dataset.go; }; }
 let pendingIdx = 0;
 
+function goFull(el){
+  const req=el.requestFullscreen||el.webkitRequestFullscreen;
+  const done=()=>{ try{ screen.orientation&&screen.orientation.lock&&screen.orientation.lock("landscape").catch(()=>{}); }catch(e){} };
+  if(req){ try{ const p=req.call(el); if(p&&p.then) p.then(done).catch(()=>pseudo(el)); else done(); return; }catch(e){} }
+  pseudo(el);
+}
+function pseudo(el){
+  el.classList.add("pfs-on"); document.documentElement.classList.add("sv-open");
+  const x=document.createElement("button"); x.className="pfs-x"; x.setAttribute("aria-label","전체 화면 닫기");
+  x.innerHTML='<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>'; el.appendChild(x);
+  x.onclick=e=>{e.stopPropagation(); el.classList.remove("pfs-on"); document.documentElement.classList.remove("sv-open"); x.remove();};
+}
 function player(course, idx){
   clearInterval(timer); window.onresize=null;
   const c = CATS[course.cat]; const L = course.lectures;
@@ -527,6 +551,7 @@ function player(course, idx){
           <div class="ctrls">
             <button class="btn" id="prev"><svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5"/></svg>이전 강의</button>
             <button class="btn" id="next">다음 강의<svg viewBox="0 0 16 16"><path d="M6 3l5 5-5 5"/></svg></button>
+            <button class="btn fsb" id="fsb"><svg viewBox="0 0 16 16"><path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"/></svg>전체 화면</button>
             <a class="btn" id="open" target="_blank" rel="noopener">새 창에서 보기</a>
           </div>
         </div>
@@ -536,6 +561,7 @@ function player(course, idx){
         <li><button data-i="${i}"><span class="mini">${img(l,240,"",ph(course.cat,""))}</span><span><b>${esc(l.grp?l.title:(l.title?l.label+". "+l.title:l.label))}</b>${l.meta?`<small>${esc(l.meta)}</small>`:""}${l.extras?`<span class="xs">+ ${l.extras.map(x=>esc(x.type)).join(" · ")}</span>`:""}</span></button></li>`).join("")}</ol></aside>
     </div></div></main>`;
   document.getElementById("back").onclick=goHome;
+  document.getElementById("fsb").onclick=()=>goFull(document.getElementById("screen"));
   const frame=document.getElementById("frame"), screen=document.getElementById("screen"), tabs=document.getElementById("mtabs"), hint=document.getElementById("hint");
   function view(l,k){ // k=-1 lecture video, else extra index
     const x = k<0 ? null : l.extras[k];
