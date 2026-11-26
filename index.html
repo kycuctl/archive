@@ -297,7 +297,8 @@ html.sv-open,html.sv-open body{overflow:hidden}
 .promo-sec .fh .ft{border-color:transparent;color:#07090F;background:linear-gradient(95deg,#FF8A3D,#FFC857)}
 .promo-sec .fh h2{color:var(--ink)}
 .promo-sec .fh h2::before{background:linear-gradient(#FFC857,#FF8A3D)}
-.promo{position:relative;margin-top:14px;max-width:1100px;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;border:1px solid var(--line)}
+.promo-grid{display:grid;grid-template-columns:8fr 3fr;gap:16px;margin-top:14px;max-width:1240px;align-items:start}
+.promo{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;border:1px solid var(--line)}
 .promo iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .promo-btn{all:unset;position:absolute;inset:0;cursor:pointer}
 .promo-btn img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
@@ -307,6 +308,18 @@ html.sv-open,html.sv-open body{overflow:hidden}
 .promo-btn:hover .promo-pl{transform:translate(-50%,-50%) scale(1.06)}
 .promo-pl svg{width:26%;height:26%;fill:#07090F;margin-left:6%}
 .promo-btn:focus-visible{outline:3px solid #FFC857;outline-offset:-3px;border-radius:14px}
+.poster{all:unset;box-sizing:border-box;position:relative;display:block;cursor:zoom-in;aspect-ratio:2/3;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0D1120}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.poster:hover img{transform:scale(1.03)}
+.poster:focus-visible{outline:3px solid #FFC857;outline-offset:2px}
+.pz{position:absolute;right:10px;bottom:10px;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:rgba(7,9,15,.72);color:#fff;font-size:12.5px;font-weight:600;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.pz svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.lb{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.88);display:grid;place-items:center;padding:calc(env(safe-area-inset-top,0px) + 56px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);cursor:zoom-out}
+.lb:focus{outline:none}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.6);cursor:default}
+.lb-x{position:fixed;top:calc(env(safe-area-inset-top,0px) + 14px);right:14px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.5);color:#fff;cursor:pointer;display:grid;place-items:center}
+.lb-x svg{width:20px;height:20px;stroke:currentColor;stroke-width:2.2;fill:none}
+@media (max-width:760px){.promo-grid{grid-template-columns:1fr}.poster{max-width:420px;width:100%;justify-self:center}}
 .devcard{display:flex;align-items:center;gap:12px;padding:20px 22px;border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-size:14.5px;background:repeating-linear-gradient(135deg,transparent 0 14px,var(--hover) 14px 15px)}
 .devtag{flex:none;display:inline-block;padding:2px 10px;border-radius:999px;border:1px solid var(--c,var(--accent));color:var(--c,var(--accent));font-size:12.5px;font-weight:700}
 .devrow td{color:var(--muted)}
@@ -450,8 +463,9 @@ function home(){
       <div class="rail-wrap"><div class="rail srail">${SHORTS.map((s,i)=>`<button class="sc" data-short="${i}" style="--c:var(${CATS[s.c.cat].v})" aria-label="${esc(s.c.name)} 숏폼 재생">
         <span class="sth"><img src="https://i.ytimg.com/vi/${s.yt}/oardefault.jpg" alt="" loading="lazy" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='https://i.ytimg.com/vi/${s.yt}/hqdefault.jpg'}"><span class="spl">${playIcon}</span>
         <span class="scap"><i>${esc(s.c.name)}</i>${stSpan(s)}</span></span></button>`).join("")}</div></div></section>
-    <section class="promo-sec" aria-label="홍보 영상"><div class="fh"><h2>홍보 영상</h2><span class="ft">PROMO</span><p class="fd">건양사이버대학교 HYBRID AI·XR 콘텐츠를 소개하는 영상</p></div>
-      <div class="promo" id="promo"><button class="promo-btn" aria-label="홍보 영상 재생"><img src="https://i.ytimg.com/vi/QjqLS0CcTGo/maxresdefault.jpg" alt="" loading="lazy" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='https://i.ytimg.com/vi/QjqLS0CcTGo/hqdefault.jpg'}"><span class="promo-pl">${playIcon}</span></button></div>
+    <section class="promo-sec" aria-label="홍보"><div class="fh"><h2>홍보</h2><span class="ft">PROMO</span><p class="fd">건양사이버대학교 HYBRID AI·XR 콘텐츠를 소개하는 영상과 포스터</p></div>
+      <div class="promo-grid"><div class="promo" id="promo"><button class="promo-btn" aria-label="홍보 영상 재생"><img src="https://i.ytimg.com/vi/QjqLS0CcTGo/maxresdefault.jpg" alt="" loading="lazy" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='https://i.ytimg.com/vi/QjqLS0CcTGo/hqdefault.jpg'}"><span class="promo-pl">${playIcon}</span></button></div>
+      <button class="poster" id="posterBtn" aria-label="포스터 크게 보기"><img src="poster.jpg" alt="교육부 인공지능·디지털(AID) 30+ 프로젝트 사이버대학 디지털교육 환경 고도화 지원사업 홍보 포스터 – 사이버교육 그 이상" loading="lazy"><span class="pz"><svg viewBox="0 0 24 24"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-5-5M11 8v6M8 11h6"/></svg>크게 보기</span></button></div></div>
     </section>
   </div></main>`;
   // carousel (3 copies for an endless loop)
@@ -481,6 +495,11 @@ function home(){
   window.onresize=()=>place(false);
   place(false); start();
   app.querySelectorAll("[data-go]").forEach(bindGo);
+  const pz=app.querySelector("#posterBtn"); if(pz) pz.onclick=()=>{const o=document.createElement("div");o.className="lb";o.setAttribute("role","dialog");o.setAttribute("aria-label","포스터");o.tabIndex=-1;
+    o.innerHTML=`<img src="poster.jpg" alt="홍보 포스터"><button class="lb-x" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`;
+    const close=()=>{o.remove();document.documentElement.classList.remove("sv-open");pz.focus();};
+    o.onclick=e=>{if(e.target===o||e.target.closest(".lb-x"))close();}; o.onkeydown=e=>{if(e.key==="Escape")close();};
+    document.body.appendChild(o);document.documentElement.classList.add("sv-open");o.focus();};
   const pb=app.querySelector(".promo-btn"); if(pb) pb.onclick=()=>{document.getElementById("promo").innerHTML=`<iframe src="https://www.youtube.com/embed/QjqLS0CcTGo?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="홍보 영상" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;};
   app.querySelectorAll("[data-short]").forEach(b=>b.onclick=()=>{location.hash="shorts-"+b.dataset.short;});
   app.querySelectorAll(".rail-wrap").forEach(w=>{
