@@ -524,17 +524,15 @@ function home(){
 function bindGo(b){ b.onclick=()=>{ pendingIdx = b.dataset.i ? +b.dataset.i : 0; location.hash=b.dataset.go; }; }
 let pendingIdx = 0;
 
-function goFull(el){
-  const req=el.requestFullscreen||el.webkitRequestFullscreen;
-  const done=()=>{ try{ screen.orientation&&screen.orientation.lock&&screen.orientation.lock("landscape").catch(()=>{}); }catch(e){} };
-  if(req){ try{ const p=req.call(el); if(p&&p.then) p.then(done).catch(()=>pseudo(el)); else done(); return; }catch(e){} }
-  pseudo(el);
-}
+function goFull(el){ if(el.classList.contains("pfs-on")) return; pseudo(el); }
 function pseudo(el){
   el.classList.add("pfs-on"); document.documentElement.classList.add("sv-open");
   const x=document.createElement("button"); x.className="pfs-x"; x.setAttribute("aria-label","전체 화면 닫기");
   x.innerHTML='<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>'; el.appendChild(x);
-  x.onclick=e=>{e.stopPropagation(); el.classList.remove("pfs-on"); document.documentElement.classList.remove("sv-open"); x.remove();};
+  const off=()=>{ el.classList.remove("pfs-on"); document.documentElement.classList.remove("sv-open"); x.remove(); document.removeEventListener("keydown",esc); window.removeEventListener("popstate",off); };
+  const esc=e=>{ if(e.key==="Escape") off(); };
+  x.onclick=e=>{e.stopPropagation(); off();};
+  document.addEventListener("keydown",esc);
 }
 function player(course, idx){
   clearInterval(timer); window.onresize=null;
